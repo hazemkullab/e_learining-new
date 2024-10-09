@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Models\video;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\video;
+use App\Models\course;
+use App\Http\Controllers\Controller;
 
 class VideoController extends Controller
 {
@@ -23,7 +25,9 @@ class VideoController extends Controller
      */
     public function create()
     {
-        //
+        $courses= course::select('id','name')->get();
+        $video=new video();
+        return view('admin.videos.create', compact('courses','video'));
     }
 
     /**
@@ -31,7 +35,35 @@ class VideoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name_en'=> 'required',
+            'name_ar'=> 'required',
+            'path'=> 'required',
+            'course_id' =>'required|exists:courses,id'
+          ]);
+
+          //upload file
+          $path= time().rand().$request->file('path')->getClientOriginalName();
+          $request->file('path')->move(public_path('uploads'),$path);
+
+
+          $name = [
+              'en'=> $request->name_en,
+              'ar'=> $request->name_ar,
+          ];
+
+          video::create([
+              'name' => json_encode($name, JSON_UNESCAPED_UNICODE),
+              'path'=>$path,
+              'type'=>$request->type,
+              'course_id'=>$request->course_id,
+
+          ]);
+
+          return redirect()
+              ->route('admin.videos.index')
+              ->with('msg','Video Updated')
+              ->with('type','info');
     }
 
     /**
@@ -47,7 +79,9 @@ class VideoController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $video=video::findOrFail($id);
+        $courses = course::select('id','name')->get();
+        return view('admin.videos.edit', compact('video','courses'));
     }
 
     /**
@@ -55,7 +89,41 @@ class VideoController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'name_en'=> 'required',
+            'name_ar'=> 'required',
+            'path'=> 'nullable',
+            'course_id' =>'required|exists:courses,id'
+          ]);
+
+
+          $video=video::findOrFail($id);
+          $path=$video->path;
+
+          if($request->hasFile('path')){
+                      //upload file
+            $path= time().rand().$request->file('path')->getClientOriginalName();
+            $request->file('path')->move(public_path('uploads'),$path);
+          }
+
+
+          $name = [
+              'en'=> $request->name_en,
+              'ar'=> $request->name_ar,
+          ];
+
+          $video->update([
+              'name' => json_encode($name, JSON_UNESCAPED_UNICODE),
+              'image'=>$path,
+              'type'=>$request->type,
+              'course_id'=>$request->course_id,
+
+          ]);
+
+          return redirect()
+              ->route('admin.videos.index')
+              ->with('msg','Video Added')
+              ->with('type','success');
     }
 
     /**
@@ -63,7 +131,12 @@ class VideoController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        video::destroy($id);
+
+        return redirect()
+        ->route('admin.videos.index')
+        ->with('msg','Video moved to trash successfully')
+        ->with('type','info');
     }
 
         /**
@@ -71,7 +144,9 @@ class VideoController extends Controller
      */
     public function trash()
     {
-        //
+        $videos = video::onlyTrashed()->latest()->get();
+        $type='trash';
+        return view('admin.videos.index',compact('videos','type'));
     }
 
 
@@ -81,7 +156,12 @@ class VideoController extends Controller
      */
     public function restore($id)
     {
-        //
+        video::withTrashed()->find($id)->restore();
+
+        return redirect()
+            ->route('admin.videos.index')
+            ->with('msg','Video untrashed successfully')
+            ->with('type','success');
     }
 
 
@@ -90,6 +170,10 @@ class VideoController extends Controller
      */
     public function forceDelete($id)
     {
-        //
+        video::withTrashed()->find($id)->forceDelete();
+        return redirect()
+            ->route('admin.videos.index')
+            ->with('msg','Video Deleted successfully')
+            ->with('type','danger');
     }
 }

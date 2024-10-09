@@ -10,7 +10,7 @@
                     <span class="subheading">Expert instruction</span>
                     <h1>Build Skills With Experts Any Time, Anywhere </h1>
                     <p>We invest in personnel, technological innovations and infrastructure and have established regional and international offices.</p>
-                    <a href="#" class="btn btn-main"><i class="fa fa-list-ul mr-2"></i>our Courses </a>
+                    <a href="{{ route('website.courses') }}" class="btn btn-main"><i class="fa fa-list-ul mr-2"></i>our Courses </a>
                 </div>
             </div>
         </div> <!-- / .row -->
@@ -22,52 +22,18 @@
     <div class="container">
         <div class="row no-gutters">
             <div class="course-categories">
-                <div class="category-item category-bg-1">
-                  <a href="#">
-                    <div class="category-icon">
-                        <i class="bi bi-laptop"></i>
+                @foreach ($categories as $item)
+                    <div class="category-item category-bg-{{ $loop->iteration }}">
+                        <a href="{{ route('website.category',$item->slug) }}">
+                        {{-- <div class="category-icon">
+                            <i class="bi bi-laptop"></i>
+                        </div> --}}
+                        <h4>{{ $item->trans_name }}</h4>
+                        <p>({{ $item->courses->count() }} Courses)</p>
+                        </a>
                     </div>
-                    <h4>Web Development</h4>
-                    <p>(4 Courses)</p>
-                  </a>
-                </div>
-                <div class="category-item category-bg-2">
-                    <a href="#">
-                        <div class="category-icon">
-                            <i class="bi bi-layer"></i>
-                        </div>
-                        <h4>Design</h4>
-                        <p>(12 Courses)</p>
-                    </a>
-                </div>
-                <div class="category-item category-bg-3">
-                   <a href="#">
-                    <div class="category-icon">
-                        <i class="bi bi-target-arrow"></i>
-                    </div>
-                    <h4>Marketing</h4>
-                    <p>(6 Courses)</p>
-                   </a>
-                </div>
+                @endforeach
 
-                <div class="category-item category-bg-4">
-                   <a href="#">
-                    <div class="category-icon">
-                        <i class="bi bi-rocket2"></i>
-                    </div>
-                    <h4>Art & Design</h4>
-                    <p>(6 Courses)</p>
-                   </a>
-                </div>
-                <div class="category-item category-bg-5">
-                   <a href="#">
-                    <div class="category-icon">
-                        <i class="bi bi-shield"></i>
-                    </div>
-                    <h4>Design</h4>
-                    <p>(12 Courses)</p>
-                   </a>
-                </div>
             </div>
         </div>
     </div>
@@ -83,107 +49,16 @@
             </div>
 
             <div class="col-lg-6">
-                <div class="course-btn text-lg-right"><a href="#" class="btn btn-main"><i class="fa fa-store mr-2"></i>All Courses</a></div>
+                <div class="course-btn text-lg-right"><a href="{{ route('website.courses') }}" class="btn btn-main"><i class="fa fa-store mr-2"></i>All Courses</a></div>
             </div>
         </div>
 
         <div class="row">
-            <div class="col-lg-4 col-md-6">
-                <div class="course-block">
-                    <div class="course-img">
-                        <img src="{{asset('webasset/assets/images/course/course1.jpg')}}" alt="" class="img-fluid">
-                        <span class="course-label">Beginner</span>
-                    </div>
-
-                    <div class="course-content">
-                        <div class="course-price ">$50</div>
-
-                        <h4><a href="#">Information About UI/UX Design Degree</a></h4>
-                        <div class="rating">
-                            <a href="#"><i class="fa fa-star"></i></a>
-                            <a href="#"><i class="fa fa-star"></i></a>
-                            <a href="#"><i class="fa fa-star"></i></a>
-                            <a href="#"><i class="fa fa-star"></i></a>
-                            <a href="#"><i class="fa fa-star"></i></a>
-                            <span>(5.00)</span>
-                        </div>
-                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis, alias.</p>
-
-                        <div class="course-footer d-lg-flex align-items-center justify-content-between">
-                            <div class="course-meta">
-                                <span class="course-student"><i class="bi bi-group"></i>340</span>
-                                <span class="course-duration"><i class="bi bi-badge3"></i>82 Lessons</span>
-                            </div>
-
-                            <div class="buy-btn"><a href="#" class="btn btn-main-2 btn-small">Details</a></div>
-                        </div>
-                    </div>
+            @foreach ($latest_courses as $course)
+                <div class="col-lg-4 col-md-6">
+                    @include('front.sections.course')
                 </div>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="course-block">
-                    <div class="course-img">
-                        <img src="{{asset('webasset/assets/images/course/course2.jpg')}}" alt="" class="img-fluid">
-                        <span class="course-label">Advanced</span>
-                    </div>
-
-                    <div class="course-content">
-                        <div class="course-price ">$80 <span class="del">$120</span></div>
-
-                        <h4><a href="#">Photography Crash Course for Photographer</a></h4>
-                        <div class="rating">
-                            <a href="#"><i class="fa fa-star"></i></a>
-                            <a href="#"><i class="fa fa-star"></i></a>
-                            <a href="#"><i class="fa fa-star"></i></a>
-                            <a href="#"><i class="fa fa-star"></i></a>
-                            <a href="#"><i class="fa fa-star"></i></a>
-                            <span>(5.00)</span>
-                        </div>
-                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis, alias.</p>
-
-                        <div class="course-footer d-lg-flex align-items-center justify-content-between">
-                            <div class="course-meta">
-                                <span class="course-student"><i class="bi bi-group"></i>340</span>
-                                <span class="course-duration"><i class="bi bi-badge3"></i>82 Lessons</span>
-                            </div>
-
-                            <div class="buy-btn"><a href="#" class="btn btn-main-2 btn-small">Details</a></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="course-block">
-                    <div class="course-img">
-                        <img src="{{asset('webasset/assets/images/course/course3.jpg')}}" alt="" class="img-fluid">
-                        <span class="course-label">Expert</span>
-                    </div>
-
-                    <div class="course-content">
-                        <div class="course-price ">$100 <span class="del">$180</span></div>
-
-                        <h4><a href="#">React – The Complete Guide (React Router)</a></h4>
-                        <div class="rating">
-                            <a href="#"><i class="fa fa-star"></i></a>
-                            <a href="#"><i class="fa fa-star"></i></a>
-                            <a href="#"><i class="fa fa-star"></i></a>
-                            <a href="#"><i class="fa fa-star"></i></a>
-                            <a href="#"><i class="fa fa-star"></i></a>
-                            <span>(5.00)</span>
-                        </div>
-                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis, alias.</p>
-
-                        <div class="course-footer d-lg-flex align-items-center justify-content-between">
-                            <div class="course-meta">
-                                <span class="course-student"><i class="bi bi-group"></i>340</span>
-                                <span class="course-duration"><i class="bi bi-badge3"></i>82 Lessons</span>
-                            </div>
-
-                            <div class="buy-btn"><a href="#" class="btn btn-main-2 btn-small">Details</a></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            @endforeach
         </div>
     </div>
 </section>
@@ -276,113 +151,18 @@
             <div class="text-center">
                 <ul class="course-filter">
                     <li class="active"><a href="#" data-filter="*"> All</a></li>
-                    <li><a href="#" data-filter=".cat1">printing</a></li>
-                    <li><a href="#" data-filter=".cat2">Web</a></li>
-                    <li><a href="#" data-filter=".cat3">illustration</a></li>
-                    <li><a href="#" data-filter=".cat4">media</a></li>
-                    <li><a href="#" data-filter=".cat5">crafts</a></li>
+                    @foreach ($categories as $item)
+                    <li><a href="#" data-filter=".cat{{ $item->id }}">{{ $item->trans_name  }}</a></li>
+                    @endforeach
                 </ul>
             </div>
 
             <div class="row course-gallery ">
-                <div class="course-item cat1 cat3 col-lg-4 col-md-6">
-                    <div class="course-block">
-                        <div class="course-img">
-                            <img src="{{asset('webasset/assets/images/course/course3.jpg')}}" alt="" class="img-fluid">
-                            <span class="course-label">Expert</span>
-                        </div>
-
-                        <div class="course-content">
-                            <div class="course-price ">$100 <span class="del">$180</span></div>
-
-                            <h4><a href="#">React – The Complete Guide (React Router)</a></h4>
-                            <div class="rating">
-                                <a href="#"><i class="fa fa-star"></i></a>
-                                <a href="#"><i class="fa fa-star"></i></a>
-                                <a href="#"><i class="fa fa-star"></i></a>
-                                <a href="#"><i class="fa fa-star"></i></a>
-                                <a href="#"><i class="fa fa-star"></i></a>
-                                <span>(5.00)</span>
-                            </div>
-                            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis, alias.</p>
-
-                            <div class="course-footer d-lg-flex align-items-center justify-content-between">
-                                <div class="course-meta">
-                                    <span class="course-student"><i class="bi bi-group"></i>340</span>
-                                    <span class="course-duration"><i class="bi bi-badge3"></i>82 Lessons</span>
-                                </div>
-
-                                <div class="buy-btn"><a href="#" class="btn btn-main-2 btn-small">Details</a></div>
-                            </div>
-                        </div>
-                    </div>
+                @foreach ($courses as $course)
+                <div class="course-item cat{{ $course->category_id }} col-lg-4 col-md-6">
+                    @include('front.sections.course')
                 </div>
-
-                <div class="course-item cat2 cat4 col-lg-4 col-md-6">
-                    <div class="course-block">
-                        <div class="course-img">
-                            <img src="{{asset('webasset/assets/images/course/course2.jpg')}}" alt="" class="img-fluid">
-                            <span class="course-label">Advanced</span>
-                        </div>
-
-                        <div class="course-content">
-                            <div class="course-price ">$80 <span class="del">$120</span></div>
-
-                            <h4><a href="#">Photography Crash Course for Photographer</a></h4>
-                            <div class="rating">
-                                <a href="#"><i class="fa fa-star"></i></a>
-                                <a href="#"><i class="fa fa-star"></i></a>
-                                <a href="#"><i class="fa fa-star"></i></a>
-                                <a href="#"><i class="fa fa-star"></i></a>
-                                <a href="#"><i class="fa fa-star"></i></a>
-                                <span>(5.00)</span>
-                            </div>
-                            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis, alias.</p>
-
-                            <div class="course-footer d-lg-flex align-items-center justify-content-between">
-                                <div class="course-meta">
-                                    <span class="course-student"><i class="bi bi-group"></i>340</span>
-                                    <span class="course-duration"><i class="bi bi-badge3"></i>82 Lessons</span>
-                                </div>
-
-                                <div class="buy-btn"><a href="#" class="btn btn-main-2 btn-small">Details</a></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="course-item cat5 cat2 col-lg-4 col-md-6">
-                    <div class="course-block">
-                        <div class="course-img">
-                            <img src="{{asset('webasset/assets/images/course/course1.jpg')}}" alt="" class="img-fluid">
-                            <span class="course-label">Beginner</span>
-                        </div>
-
-                        <div class="course-content">
-                            <div class="course-price ">$50</div>
-
-                            <h4><a href="#">Information About UI/UX Design Degree</a></h4>
-                            <div class="rating">
-                                <a href="#"><i class="fa fa-star"></i></a>
-                                <a href="#"><i class="fa fa-star"></i></a>
-                                <a href="#"><i class="fa fa-star"></i></a>
-                                <a href="#"><i class="fa fa-star"></i></a>
-                                <a href="#"><i class="fa fa-star"></i></a>
-                                <span>(5.00)</span>
-                            </div>
-                            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis, alias.</p>
-
-                            <div class="course-footer d-lg-flex align-items-center justify-content-between">
-                                <div class="course-meta">
-                                    <span class="course-student"><i class="bi bi-group"></i>340</span>
-                                    <span class="course-duration"><i class="bi bi-badge3"></i>82 Lessons</span>
-                                </div>
-
-                                <div class="buy-btn"><a href="#" class="btn btn-main-2 btn-small">Details</a></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
         <!--course-->
@@ -433,7 +213,7 @@
     </div>
 </section>
 
-    <!--course section start-->
+    {{-- <!--course section start-->
     <section class="section-padding video-section2 clearfix" >
         <div class="video-block-container"></div>
         <div class="container">
@@ -450,7 +230,7 @@
             </div>
         </div>
         <!--course-->
-    </section>
+    </section> --}}
     <!--course section end-->
 <section class="testimonial section-padding">
     <div class="container">

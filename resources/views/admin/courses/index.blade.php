@@ -43,6 +43,7 @@
                         <th>English Name</th>
                         <th>Arabic Name</th>
                         <th>Category</th>
+                        <th>price</th>
                         <th>Discount</th>
                         <th>Image</th>
                         <th>Actions</th>
@@ -50,9 +51,10 @@
                 </thead>
                 <tfoot>
                     <tr>
-                        <th>English Name</th
+                        <th>English Name</th>
                         <th>Arabic Name</th>
                         <th>Category</th>
+                        <th>price</th>
                         <th>Discount</th>
                         <th>Image</th>
                         <th>Actions</th>
@@ -64,6 +66,7 @@
                         <td>{{ $course->en_name }}</td>
                         <td>{{ $course->ar_name }}</td>
                         <td>{{ $course->category ? $course->category->trans_name : '' }}</td>
+                        <td>{{ $course->price }}$</td>
                         <td>{{ $course->discount }}%</td>
                         <td> <img width="100" class="img-thumbnail" src="{{ asset('uploads/'.$course->image)}}" alt=""> </td>
 

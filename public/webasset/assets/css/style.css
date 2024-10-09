@@ -2,7 +2,7 @@
 Author       : Dreambuzz
 Template Name: Edutim- Education LMS template
 Author URI : https://themeturn.com/
-Description: edutim,coaching, distant learning, education html, health coaching, kids education, language school, learning online html, live training, online courses, online training, remote training, school html theme, training, university html, virtual training 
+Description: edutim,coaching, distant learning, education html, health coaching, kids education, language school, learning online html, live training, online courses, online training, remote training, school html theme, training, university html, virtual training
 Version      : 1.0
 ================================*/
 /*------------------------------------------------------------------
@@ -1077,6 +1077,11 @@ Course Block
   background: #fff;
   transition: .4s;
   margin-bottom:25px;
+  height: 100%;
+}
+
+.course-block p {
+    min-height: 140px;
 }
 
 .course-block:hover {
@@ -1090,6 +1095,7 @@ Course Block
 
 .course-block .course-content h4 {
   margin: 10px 0px;
+  min-height: 50px;
 }
 
 .course-block .course-footer {
@@ -4808,7 +4814,7 @@ Blog Main
 }
 
 /*==================
-Blog PAge 
+Blog PAge
 ==================== */
 .main-content-area {
   padding: 100px 0px;
@@ -5000,13 +5006,13 @@ Blog pagination
   display: inline-block;
 }
 
-.blog-pagination ul li.active a {
+.blog-pagination ul li.active .page-link {
   color: #fff;
   background: #FF1949;
   border-color: #FF1949;
 }
 
-.blog-pagination ul li a {
+.blog-pagination ul li .page-link {
   width: 50px;
   height: 50px;
   background: #fff;
@@ -5017,16 +5023,17 @@ Blog pagination
   display: inline-block;
   font-weight: 700;
   border-radius: 5px;
+  line-height:  unset ;
 }
 
-.blog-pagination ul li a:hover {
+.blog-pagination ul li .page-link:hover {
   background: #385777;
   color: #fff;
   border-color: #385777;
 }
 
 /*==========================
-Single Blog Page 
+Single Blog Page
 ===========================*/
 .post-single h1, .post-single h2, .post-single h3, .post-single h4, .post-single h5, .post-single h6 {
   margin-bottom: 20px;

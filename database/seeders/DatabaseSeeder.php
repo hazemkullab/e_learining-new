@@ -2,7 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\category;
+use App\Models\course;
 use App\Models\User;
+use App\Models\video;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -15,9 +18,13 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        // User::factory()->create([
+        //     'name' => 'Test User',
+        //     'email' => 'test@example.com',
+        // ]);
+
+        category::factory(5)->create();
+        course::factory(20)->create();
+        video::factory(100)->create();
     }
 }

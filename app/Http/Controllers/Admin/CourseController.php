@@ -43,6 +43,7 @@ class CourseController extends Controller
           'en_content'=> 'required|min:100',
           'ar_content'=> 'required|min:100',
           'image'=> 'required|image|mimes:png,jpg,jpeg,gif,svg',
+          'price'=>'required|numeric',
           'discount'=>'nullable|numeric',
           'category_id' =>'required'
         ]);
@@ -73,6 +74,7 @@ class CourseController extends Controller
             'excerpt' => json_encode($excerpt, JSON_UNESCAPED_UNICODE),
             'content' => json_encode($content, JSON_UNESCAPED_UNICODE),
             'image'=>$imagename,
+            'price'=>$request->price,
             'discount'=>$request->discount,
             'category_id'=>$request->category_id,
 
@@ -115,6 +117,7 @@ class CourseController extends Controller
             'en_content'=> 'required|min:100',
             'ar_content'=> 'required|min:100',
             'image'=> 'nullable|image|mimes:png,jpg,jpeg,gif,svg',
+            'price'=>'required|numeric',
             'discount'=>'nullable|numeric',
             'category_id' =>'required'
           ]);
@@ -150,6 +153,7 @@ class CourseController extends Controller
               'excerpt' => json_encode($excerpt, JSON_UNESCAPED_UNICODE),
               'content' => json_encode($content, JSON_UNESCAPED_UNICODE),
               'image'=>$imagename,
+              'price'=>$request->price,
               'discount'=>$request->discount,
               'category_id'=>$request->category_id,
 

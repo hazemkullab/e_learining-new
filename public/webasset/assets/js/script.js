@@ -12,6 +12,7 @@
       $('.scroll-to-top').removeClass('reveal');
     }
   });
+  var rtl = $('html').attr('lang') == 'ar' ? true: false ;
 
   //  Tetsimonial 1
   $('.testimonials-slides').owlCarousel({
@@ -24,6 +25,7 @@
     center: true,
     responsiveClass: true,
     autoplayTimeout: 4000,
+    rtl: rtl,
     responsive: {
       0: {
         items: 1
@@ -52,6 +54,7 @@
     autoplayHoverPause: true,
     autoplay: false,
     responsiveClass: true,
+    rtl: rtl,
     autoplayTimeout: 4000,
     navText: ["<i class='bi bi-arrow-left-rounded'></i>", "<i class='bi bi-arrow-right-rounded'></i>"],
     responsive: {
@@ -78,6 +81,7 @@
     loop: true,
     dots: true,
     nav: false,
+    rtl: rtl,
     margin: 10,
     autoplayHoverPause: true,
     autoplay: false,
@@ -104,11 +108,12 @@
     }
   });
 
-  //  Course Slider 
+  //  Course Slider
   $('.course-slides').owlCarousel({
     loop: true,
     dots: true,
     nav: false,
+    rtl: rtl,
     margin: 10,
     autoplayHoverPause: true,
     autoplay: false,
@@ -138,6 +143,7 @@
     loop: true,
     dots: true,
     nav: false,
+    rtl: rtl,
     margin: 10,
     autoplayHoverPause: true,
     autoplay: false,
@@ -159,8 +165,8 @@
         items: 3
       }
     }
-  }); 
-  
+  });
+
   // Counter
 
   $('.counter').counterUp({
@@ -173,6 +179,7 @@
     loop: true,
     nav: false,
     dots: true,
+    rtl: rtl,
     autoplayHoverPause: true,
     autoplay: false,
     navRewind: false,
@@ -195,8 +202,8 @@
         items: 4
       }
     }
-  }); 
-  
+  });
+
   // overlay search
 
   $('.search_toggle').on('click', function (e) {
@@ -271,7 +278,7 @@
   });
 
 
-  
+
    /*
     * ----------------------------------------------------------------------------------------
     *  SMOTH SCROOL JS
@@ -289,7 +296,7 @@
     /* ----------------------------------------------------------- */
       /*  Fixed header
       /* ----------------------------------------------------------- */
-  
+
       $(window).scroll(function () {
         var window_top = $(window).scrollTop() + 1;
         if (window_top > 50) {

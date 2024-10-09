@@ -31,14 +31,14 @@
     <div class="col-md-12">
         <div class="mb-3">
             <label>English Content </label>
-            <textarea  name="en_content" class="form-control textarea" rows="8">{{ old('en_content',$course->en_content) }}</textarea>
+            <textarea id="mytextarea"  name="en_content" class=" form-control " rows="8">{{ old('en_content',$course->en_content) }}</textarea>
         </div>
     </div>
 
     <div class="col-md-12">
         <div class="mb-3">
             <label>Arabic Content </label>
-            <textarea name="ar_content" class="form-control textarea" rows="8">{{ old('ar_content',$course->ar_content) }}</textarea>
+            <textarea id="mytextarea" name="ar_content" class="form-control mytextarea" rows="8">{{ old('ar_content',$course->ar_content) }}</textarea>
         </div>
     </div>
 
@@ -48,6 +48,13 @@
             <label> Image </label>
             <input type="file" name="image" class="form-control">
             <img width="100" class="img-thumbnail" src="{{ asset('uploads/'.$course->image)}}" alt="">
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        <div class="mb-3">
+            <label> Price </label>
+            <input type="text" name="price" value="{{ old('discount',$course->price) }}" class="form-control">
         </div>
     </div>
 
@@ -70,13 +77,15 @@
         </div>
     </div>
 
+
     @section('scripts')
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/7.3.0/tinymce.min.js"></script>
     <script>
 
       tinymce.init({
-      selector: 'textarea',
-      plugins:['code']
+        selector: '#mytextarea',
+        plugins:['code']
 
 
     });

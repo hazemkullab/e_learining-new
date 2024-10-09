@@ -1,0 +1,95 @@
+@extends('admin.master')
+
+@section('title','All videos')
+
+@section('content')
+
+<div class="d-flex justify-content-between align-items-center">
+
+    <h1>{{ $type =='trash'? 'trashed videos' : 'All videos' }}</h1>
+
+    <a class="btn btn-outline-success" href="{{ route('admin.videos.create') }}">Add New Video</a>
+
+
+</div>
+@if (session('msg'))
+<div class="alert alert-{{ session('type') }} alert-dismissible fade show" role="alert">
+    {{ session('msg') }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+@endif
+
+
+
+<div class="card shadow mt-4 mb-4">
+    <div class="card-header d-flex justify-content-between align-items-center py-3">
+        <h6 class="m-0 font-weight-bold text-primary">{{ $type =='trash'? 'trashed videos' : 'All videos' }}</h6>
+        @if ($type == 'trash')
+        <a class="btn btn-primary btn-sm" href="{{ route('admin.videos.index') }}"><i class="fas fa-tags"></i> All</a>
+
+        @else
+        <a class="btn btn-danger btn-sm" href="{{ route('admin.videos.trash') }}"><i class="fas fa-trash"></i> Trash</a>
+        @endif
+
+
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>English Name</th>
+                        <th>Arabic Name</th>
+                        <th>Course</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>English Name</th>
+                        <th>Arabic Name</th>
+                        <th>Course</th>
+                        <th>Actions</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    @forelse ( $videos as $video )
+                    <tr>
+                        <td>{{ $video->en_name }}</td>
+                        <td>{{ $video->ar_name }}</td>
+                        <td>{{ $video->course ->trans_name}}</td>
+                        <td>
+
+                            @if ($type == 'trash')
+                                <a href="{{ route('admin.videos.restore',$video->id) }}" class="btn btn-info btn-sm"><i class="fas fa-trash-restore"></i></a>
+                                <form class="d-inline" action="{{ route('admin.videos.forcedelete', $video->id) }}" method="POST">
+                                    @csrf
+                                    @method('delete')
+                                    <button onclick="return confirm('Are You Sure !?')" class="btn btn-dark btn-sm"><i class="fas fa-times"></i></button>
+                                </form>
+                        </td>
+                            @else
+                            <a href="{{ route('admin.videos.edit',$video->id) }}" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></a>
+                                <form class="d-inline" action="{{ route('admin.videos.destroy', $video->id) }}" method="POST">
+                                    @csrf
+                                    @method('delete')
+                                    <button  class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
+                                 </form>
+                            @endif
+                        </td>
+                    @empty
+                        <tr>
+                            <td colspan="5"  style="text-align : center"> No Trashed videos</td>
+                        </tr>
+                    @endforelse
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+@stop
