@@ -128,7 +128,7 @@ class MainController extends Controller
                 ]);
 
                 //show success massage
-                return redirect()->route('website.courses_single',$course->slug)->with('msg','payment success')->with('type','success');
+                return redirect()->route('website.courses_single',$course->slug)->with('msg','payment success') ;
             }else{
 
             //show error massage
