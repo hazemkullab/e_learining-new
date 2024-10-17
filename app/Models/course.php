@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+
 
 
 class course extends basemodel
@@ -14,4 +16,15 @@ class course extends basemodel
     {
         return $this->hasMany(video::class);
     }
+
+    public function payment()
+    {
+        return $this->hasMany(payment::class);
+    }
+
+    public function users(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'course_user');
+    }
+
 }

@@ -4,11 +4,12 @@
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\MainController;
-use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\CourseController;
-use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\VideoController;
+use App\Http\Controllers\Admin\DashboardController;
+    use App\Http\Controllers\Admin\CourseController;
+use App\Http\Controllers\Admin\CategoryController;
 
 Auth::routes();
 
@@ -48,8 +49,10 @@ Route::get('/about',[MainController::class,'about'])->name('website.about');
 Route::get('/contact',[MainController::class,'contact'])->name('website.contact');
 Route::get('/courses',[MainController::class,'courses'])->name('website.courses');
 Route::get('/courses/{slug}',[MainController::class,'courses_single'])->name('website.courses_single');
+// Route::get('/payment', [PaymentController::class, 'showForm'])->name('payment.form');
+// Route::post('/payment', [PaymentController::class, 'processPayment'])->name('payment.process');
 Route::get('/buy-course/{course:slug}',[MainController::class,'buy_course'])->name('website.buy_course');
-Route::get('/buy-course/{id}/thanks',[MainController::class,'buy_course_thanks'])->name('website.buy_course_thanks');
+Route::post('/buy-course/{id}/thanks',[MainController::class,'buy_course_thanks'])->name('website.buy_course_thanks');
 Route::get('/user/login',[MainController::class,'login'])->name('website.login');
 
 

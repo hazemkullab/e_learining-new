@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\category;
-use App\Models\course;
+use Stripe\Stripe;
+use Stripe\Charge;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Models\course;
+use App\Models\category;
+use App\Models\User;
 
 class MainController extends Controller
 {
@@ -63,58 +68,74 @@ class MainController extends Controller
         return view('front.login') ;
 
     }
-     public function buy_course(course $course)
+    public function buy_course(course $course)
+    {
+        return view('front.buy_course', compact('course') ) ;
+    }
+    //  public function buy_course(course $course)
+    //  {
+    //     $price = $course->price;
+    //     $discount= $price * ($course->discount /100);
+    //     $total = $price - $discount;
+    //     $url = "https://eu-test.oppwa.com/v1/checkouts";
+    //     $data = "entityId=8a8294174b7ecb28014b9699220015ca" .
+    //                 "&amount=" .$total.
+    //                 "&currency=USD" .
+    //                 "&paymentType=DB".
+    //                 "&integrity=true";
+
+    //     $ch = curl_init();
+    //     curl_setopt($ch, CURLOPT_URL, $url);
+    //     curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+    //                 'Authorization:Bearer OGE4Mjk0MTc0YjdlY2IyODAxNGI5Njk5MjIwMDE1Y2N8c3k2S0pzVDg='));
+    //     curl_setopt($ch, CURLOPT_POST, 1);
+    //     curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+    //     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);// this should be set to true in production
+    //     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    //     $responseData = curl_exec($ch);
+    //     if(curl_errno($ch)) {
+    //         return curl_error($ch);
+    //     }
+    //     curl_close($ch);
+    //     $responseData = json_decode($responseData, true);
+    //     $checkoutId = $responseData ['id'];
+    //     $integrity = $responseData ['integrity'];
+    //     return view('front.buy_course',compact('course','checkoutId','integrity'));
+    //  }
+
+     public function buy_course_thanks (Request  $request)
      {
-        $price = $course->price;
-        $discount= $price * ($course->discount /100);
-        $total = $price - $discount;
-        $url = "https://eu-test.oppwa.com/v1/checkouts";
-        $data = "entityId=8a8294174b7ecb28014b9699220015ca" .
-                    "&amount=" .$total.
-                    "&currency=USD" .
-                    "&paymentType=DB".
-                    "&integrity=true";
+        $course = Course::where('id',$request->id)->firstOrFail();
+                $price = $course->price;
+                $discount= $price * ($course->discount /100);
+                $total = $price - $discount;
+        Stripe::setApiKey(env('STRIPE_SECRET'));
 
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                    'Authorization:Bearer OGE4Mjk0MTc0YjdlY2IyODAxNGI5Njk5MjIwMDE1Y2N8c3k2S0pzVDg='));
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);// this should be set to true in production
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $responseData = curl_exec($ch);
-        if(curl_errno($ch)) {
-            return curl_error($ch);
-        }
-        curl_close($ch);
-        $responseData = json_decode($responseData, true);
-        $checkoutId = $responseData ['id'];
-        $integrity = $responseData ['integrity'];
-        return view('front.buy_course',compact('course','checkoutId','integrity'));
+            $charge = Charge::create([
+                'amount' => $total * 100 , // Amount in cents (e.g., $50.00)
+                'currency' => 'usd',
+                'description' => $course->trans_name,
+                'source' => $request->stripeToken,
+            ]);
+            $status = $charge->status;
+            if($status ==  'succeeded' ){
+
+                //register product
+
+                DB::table('user_courses')->insert([
+                    'user_id'=>Auth::id(),
+                    'course_id'=>$course->id
+                ]);
+
+                //show success massage
+                return redirect()->route('website.courses_single',$course->slug)->with('msg','payment success')->with('type','success');
+            }else{
+
+            //show error massage
+                return redirect()->route('website.courses_single',$course->slug)->with('msg','payment faild')->with('type','danger');
+
+            }
+
      }
-
-     public function buy_course_thanks ($id)
-     {
-        $resourcePath= request()->resourcePath;
-        $url = "https://eu-test.oppwa.com".$resourcePath;
-        $url .= "?entityId=8a8294174b7ecb28014b9699220015ca";
-
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                    'Authorization:Bearer OGE4Mjk0MTc0YjdlY2IyODAxNGI5Njk5MjIwMDE1Y2N8c3k2S0pzVDg='));
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);// this should be set to true in production
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $responseData = curl_exec($ch);
-        if(curl_errno($ch)) {
-            return curl_error($ch);
-        }
-        curl_close($ch);
-        return $responseData;
-        // return $id;
-     }
-
 
 }

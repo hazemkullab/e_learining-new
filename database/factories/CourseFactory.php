@@ -24,6 +24,7 @@ class CourseFactory extends Factory
             'content'=>  json_encode(['en'=>$this->faker->paragraph(5,true), 'ar'=>$this->faker->paragraph(5,true)],JSON_UNESCAPED_UNICODE),
             'image'=> $this->faker->imageUrl(),
             'discount'=> rand(0,20),
+            'price'=> rand(100,200),
             'category_id'=>rand(1,5),
 
 
