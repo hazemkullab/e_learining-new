@@ -45,6 +45,7 @@
     }
   });
 
+
   //  Testimonial -2
   $('.testimonials-slides-2').owlCarousel({
     loop: true,
@@ -306,5 +307,6 @@
         }
       });
 
+      
 
 })(jQuery);

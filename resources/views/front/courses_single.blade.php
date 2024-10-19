@@ -2,6 +2,12 @@
 @section('title', 'Homepage| ' . env('APP_NAME'))
 
 @section('content')
+
+@if (session('msg'))
+<div class="alert alert-{{ session('type') }}">
+    {{ session('msg') }}
+</div>
+@endif
     <section class="page-header">
         <div class="container">
             <div class="row justify-content-center">
@@ -106,7 +112,7 @@
                             <div class="edutim-course-topic ">
                                 <ul class="list-group">
                                     @foreach ($course->videos as $item)
-                                    <li class="list-group-item">{{ $item->trans_name }}</li>
+                                        <li class="list-group-item">{{ $item->trans_name }}</li>
                                     @endforeach
 
 
@@ -199,10 +205,12 @@
                                     <h4>Price: <span>${{ $course->price }}</span></h4>
                                 </div>
                                 @if (Auth::check())
-                                    <div class="buy-btn"><a href="{{ route('website.buy_course',$course->slug) }}" class="btn btn-main btn-block">Buy This Course</a>
+                                    <div class="buy-btn"><a href="{{ route('website.buy_course', $course->slug) }}"
+                                            class="btn btn-main btn-block">Buy This Course</a>
                                     </div>
                                 @else
-                                    <div class="buy-btn"><a href="{{ route('website.login') }}" class="btn btn-main btn-block">Buy This Course</a>
+                                    <div class="buy-btn"><a href="{{ route('website.login') }}"
+                                            class="btn btn-main btn-block">Buy This Course</a>
                                     </div>
                                 @endif
                             </div>
@@ -261,10 +269,18 @@
                         <div class="course-widget course-share d-flex justify-content-between align-items-center">
                             <span>Share</span>
                             <ul class="social-share list-inline">
-                                <li class="list-inline-item"><a href="https://www.facebook.com/sharer/sharer.php?u={{ request()->url() }}"><i class="fab fa-facebook"></i></a></li>
-                                <li class="list-inline-item"><a href="https://twitter.com/intent/tweet?url={{ request()->url() }}&text={{ $course->trans_name }}"><i class="fab fa-twitter"></i></a></li>
-                                <li class="list-inline-item"><a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request()->url() }}"><i class="fab fa-linkedin"></i></a></li>
-                                <li class="list-inline-item"><a href="https://pinterest.com/pin/create/button/?url={{ request()->url() }}&media=&description={{ $course->trans_name }}"><i class="fab fa-pinterest"></i></a></li>
+                                <li class="list-inline-item"><a
+                                        href="https://www.facebook.com/sharer/sharer.php?u={{ request()->url() }}"><i
+                                            class="fab fa-facebook"></i></a></li>
+                                <li class="list-inline-item"><a
+                                        href="https://twitter.com/intent/tweet?url={{ request()->url() }}&text={{ $course->trans_name }}"><i
+                                            class="fab fa-twitter"></i></a></li>
+                                <li class="list-inline-item"><a
+                                        href="https://www.linkedin.com/shareArticle?mini=true&url={{ request()->url() }}"><i
+                                            class="fab fa-linkedin"></i></a></li>
+                                <li class="list-inline-item"><a
+                                        href="https://pinterest.com/pin/create/button/?url={{ request()->url() }}&media=&description={{ $course->trans_name }}"><i
+                                            class="fab fa-pinterest"></i></a></li>
                             </ul>
                         </div>
 
@@ -317,9 +333,9 @@
 
             <div class="row">
                 @foreach ($related_courses as $course)
-                <div class="col-lg-4 col-md-6">
-                   @include('front.sections.course')
-                </div>
+                    <div class="col-lg-4 col-md-6">
+                        @include('front.sections.course')
+                    </div>
                 @endforeach
 
             </div>
