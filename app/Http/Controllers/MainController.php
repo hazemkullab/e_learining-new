@@ -70,7 +70,10 @@ class MainController extends Controller
     }
     public function buy_course(course $course)
     {
-        return view('front.buy_course', compact('course'));
+        $price = $course->price;
+        $discount = $price * ($course->discount / 100);
+        $total = $price - $discount;
+        return view('front.buy_course', compact('course','total'));
     }
 
     public function buy_course_thanks(Request  $request)

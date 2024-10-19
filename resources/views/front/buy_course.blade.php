@@ -50,13 +50,17 @@
                                 </thead>
                                 <tbody>
                                     <tr class="cart_item">
-                                        <td class="product-name">
-                                            Beanie with Logo&nbsp;
-                                            <strong class="product-quantity">× 2</strong>
-                                        </td>
+                                        <td class="product-name"> {{ $course->trans_name }} </td>
                                         <td class="product-total">
                                             <span class="woocommerce-Price-amount amount"><span
-                                                    class="woocommerce-Price-currencySymbol">৳&nbsp;</span>36.00</span>
+                                                    class="woocommerce-Price-currencySymbol">৳&nbsp;</span>{{ $course->price }}</span>
+                                        </td>
+                                    </tr>
+                                    <tr class="cart_item">
+                                        <td class="product-name"> discount </td>
+                                        <td class="product-total">
+                                            <span class="woocommerce-Price-amount amount"><span
+                                                    class="woocommerce-Price-currencySymbol">৳&nbsp;</span>{{ $course->discount }}%</span>
                                         </td>
                                     </tr>
 
@@ -68,7 +72,7 @@
                                     <tr class="order-total">
                                         <th>Total</th>
                                         <td><strong><span class="woocommerce-Price-amount amount"><span
-                                                        class="woocommerce-Price-currencySymbol">৳&nbsp;</span>54.00</span></strong>
+                                                        class="woocommerce-Price-currencySymbol">৳&nbsp;</span>{{ $total }}</span></strong>
                                         </td>
                                     </tr>
                                 </tfoot>
