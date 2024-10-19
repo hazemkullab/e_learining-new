@@ -35,4 +35,9 @@ return [
         ],
     ],
     'driver' => 'file',
+
+    'stripe' => [
+        'secret' => env('STRIPE_SECRET'),
+    ],
+
 ];
