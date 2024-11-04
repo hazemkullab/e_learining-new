@@ -34,7 +34,6 @@
                         <form action="{{ route('website.buy_course_thanks', $course->id) }}" method="POST"
                             id="payment-form">
                             @csrf
-
                             <button class="btn btn-primary" type="submit">Submit Payment</button>
                         </form>
                     </div>
